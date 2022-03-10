@@ -29,17 +29,25 @@ function getBorough(postcode) {
 
 
 function getKeyByValue(object, value) {
+	// Find corresponding key from list of values of json dict
 	return Object.keys(object).find(key => object[key].includes(value));
 }
 
 function normalisePostcode(postcode) {
 	postcode = postcode.toUpperCase();
-	let postcodeSpace = postcode[postcode.length - 4];
 
-	if (postcodeSpace != ' ') {
-		return postcode.substring(0, postcode.length - 3) + ' ' + postcode.substring(postcode.length - 3);
-	}
-	else {
-		return postcode;
-	}
+	// Remove non alphanumeric characters from postcode
+	postcode = postcode.replace(/[^0-9a-z]/gi, '');
+
+	// Legacy stuff to check if postcode had space in it. New method just removes everything non alphanumeric
+	// let postcodeSpace = postcode[postcode.length - 4];
+	// if (postcodeSpace != ' ') {
+	// 	return postcode.substring(0, postcode.length - 3) + ' ' + postcode.substring(postcode.length - 3);
+	// }
+	// else {
+	// 	return postcode;
+	// }
+
+	// Add space in correct position of postcode
+	return postcode.substring(0, postcode.length - 3) + ' ' + postcode.substring(postcode.length - 3);
 }
